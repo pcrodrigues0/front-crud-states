@@ -4,7 +4,7 @@ Crud With Quasar and mongo
 
 ---
 ![Node](https://img.shields.io/badge/-Node.js-5B9856?style=flat&logoColor=fff&logo=node.js)&nbsp;
-![badgen](https://badgen.net/badge/built%20with/javascript/yellow)](https://badgen.net)
+![badgen](https://badgen.net/badge/built%20with/javascript/yellow)
 ![badgen](https://badgen.net/badge/built%20with/love/red)
 [![Quasar](https://img.shields.io/npm/v/quasar.svg?label=quasar)](https://github.com/quasarframework/quasar)
 [![@quasar/app](https://img.shields.io/npm/v/%40quasar/app.svg?label=@quasar/app)](https://github.com/quasarframework/quasar/tree/dev/app)
