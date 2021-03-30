@@ -3,7 +3,7 @@
     <q-card class="my-card">
       <q-card-section>
         <p class="text-h6">
-          Formulário de cadastro de Estados
+          Formulário de {{this.name}} de Estados
         </p>
       </q-card-section>
       <q-card-section class="q-gutter-md">
@@ -36,7 +36,7 @@
             <q-btn
                 icon="save"
                 color="primary"
-                label="Cadastrar"
+                label="Enviar"
                 type="submit"
             />
           </div>
@@ -49,23 +49,43 @@
 </template>
 
 <script>
+
 export default {
   name: 'formState',
   data () {
     return {
       form: {
         name: '',
-        uf: ''
-      }
+        uf: '',
+        _id: ''
+      },
+      name: ''
+    }
+  },
+  mounted () {
+    if (this.$route.params._id) {
+      this.form.name = this.$route.params.name
+      this.form.uf = this.$route.params.uf
+      this.form._id = this.$route.params._id
+      this.name = 'edição'
+    } else {
+      this.name = 'cadastro'
     }
   },
   methods: {
     async cadastrar () {
       try {
-        await this.$axios.post('/states', {
-          ...this.form
-        })
-        await this.$router.push({ name: 'states' })
+        if (this.form._id) {
+          await this.$axios.put(`/states/${this.form._id}`, {
+            ...this.form
+          })
+          await this.$router.push({ name: 'states' })
+        } else {
+          await this.$axios.post('/states', {
+            ...this.form
+          })
+          await this.$router.push({ name: 'states' })
+        }
       } catch (e) {
         console.log(e)
       }
@@ -74,6 +94,8 @@ export default {
 
     },
     async backTo () {
+      this.form.name = ''
+      this.form.uf = ''
       await this.$router.push({ name: 'states' })
     }
   }

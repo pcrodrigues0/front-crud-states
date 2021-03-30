@@ -22,6 +22,12 @@
               @click="confirmDelete(props.row)"
               dense
           />
+          <q-btn
+              icon="edit"
+              color="primary"
+              @click="goToEditing(props.row)"
+              dense
+          />
         </q-td>
       </template>
     </q-table>
@@ -68,7 +74,6 @@ export default {
         const response = await this.$axios.get('/cities')
         this.states = response.data.DATA
       } catch (e) {
-        alert('deu Erro')
       }
     },
     async deleteState (id) {
@@ -76,7 +81,6 @@ export default {
         await this.$axios.delete(`/cities/${id}`)
         await this.getStates()
       } catch (e) {
-        alert('deu Erro')
       }
     },
     confirmDelete (row) {
@@ -92,6 +96,9 @@ export default {
     },
     goTo () {
       this.$router.push({ name: 'formCities' })
+    },
+    goToEditing (row) {
+      this.$router.push({ name: 'formCities', params: { name: row.name, stateId: row.stateId, _id: row._id } })
     }
 
   }

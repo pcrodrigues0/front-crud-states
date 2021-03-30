@@ -3,7 +3,7 @@
     <q-card class="my-card">
       <q-card-section>
         <p class="text-h6">
-          Formulário de cadastro de Cidades
+          Formulário de {{this.type}} de Cidades
         </p>
       </q-card-section>
       <q-card-section class="q-gutter-md">
@@ -40,7 +40,7 @@
             <q-btn
                 icon="save"
                 color="primary"
-                label="Cadastrar"
+                label="Enviar"
                 type="submit"
             />
           </div>
@@ -61,19 +61,35 @@ export default {
         name: '',
         stateId: ''
       },
-      states: []
+      states: [],
+      type: ''
     }
   },
   mounted () {
+    if (this.$route.params._id) {
+      this.form.name = this.$route.params.name
+      this.type = 'edição'
+    } else {
+      this.type = 'cadastro'
+    }
+    console.log(this.$route.params)
+
     this.getStates()
   },
   methods: {
     async cadastrar () {
       try {
-        await this.$axios.post('/cities', {
-          ...this.form
-        })
-        await this.$router.push({ name: 'cities' })
+        if (this.$route.params._id) {
+          await this.$axios.put(`/cities/${this.$route.params._id}`, {
+            ...this.form
+          })
+          await this.$router.push({ name: 'cities' })
+        } else {
+          await this.$axios.post('/cities', {
+            ...this.form
+          })
+          await this.$router.push({ name: 'cities' })
+        }
       } catch (e) {
         console.log(e)
       }

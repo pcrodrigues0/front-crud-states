@@ -22,6 +22,12 @@
               @click="confirmDelete(props.row)"
               dense
           />
+          <q-btn
+              icon="edit"
+              color="primary"
+              @click="goToEditing(props.row)"
+              dense
+          />
         </q-td>
       </template>
     </q-table>
@@ -92,6 +98,9 @@ export default {
     },
     goTo () {
       this.$router.push({ name: 'formState' })
+    },
+    goToEditing (row) {
+      this.$router.push({ name: 'formState', params: { name: row.name, uf: row.uf, _id: row._id } })
     }
 
   }
